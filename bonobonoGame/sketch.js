@@ -38,6 +38,7 @@ function draw() {
 
   textSize(20);
   text("최고 점수 " + bestScore + "점", 40, 110);
+  textSize(30);
   
   if(life===3) text("❤️ ❤️ ❤️", width-120, 50);
   if(life===2) text("😵 ❤️ ❤️", width-120, 50);
@@ -52,7 +53,7 @@ function draw() {
     }
     noStroke();
     textSize(30);
-    text("게임 오버", width/2-50, height/2-80);
+    text("게임 오버", width/2-50, height/2-100);
     
     if(mouseX>width/2-100 && mouseX<width/2+100 && mouseY>height/2+100-30 && mouseY<height/2+100+30) {
       noStroke()
@@ -95,6 +96,7 @@ function draw() {
     }
 
     noStroke();
+    textSize(30);
     obstacle.forEach(e => {
       e.y += e.speed;
       switch(e.type) {
