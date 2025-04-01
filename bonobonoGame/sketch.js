@@ -1,5 +1,4 @@
-let x = 200;
-let y = 200;
+let x,y;
 let speed = 5;
 let obstacle = [];
 let removingObstacleID = [];
@@ -24,6 +23,8 @@ let bestScore = 0;
 
 function setup() {
   createCanvas(600, 600);
+  x = width/2;
+  y = height - 100;
 }
 
 function draw() {
@@ -53,7 +54,7 @@ function draw() {
     }
     noStroke();
     textSize(30);
-    text("게임 오버", width/2-50, height/2-100);
+    text("게임 오버", width/2-50, height/2-120);
     
     if(mouseX>width/2-100 && mouseX<width/2+100 && mouseY>height/2+100-30 && mouseY<height/2+100+30) {
       noStroke()
@@ -64,13 +65,13 @@ function draw() {
       fill(255);
       text("다시하기", width/2-50, height/2+110);
 
-      
-
       if(mouseIsPressed) {
         score = 0;
-      life = 3;
-      obstacle = [];
-      isPlaying = true;
+        life = 3;
+        obstacle = [];
+        isPlaying = true;
+        x = width/2;
+        y = height - 100;
       }
     } else {
       noStroke()
