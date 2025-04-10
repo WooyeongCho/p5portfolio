@@ -7,6 +7,8 @@ const palette = {
 }
 
 let isHairOff = false;
+let isGlassesVisible = true;
+let isNewHairStyle = false; // <-- 추가!
 
 function setup() {
   createCanvas(400, 400);
@@ -15,13 +17,13 @@ function setup() {
 function draw() {
   background("#9B8D8A");
   
-  face(200,200);
+  face(200, 200);
 }
 
 function face(xPos, yPos) {
   let x = xPos;
   let y = yPos;
-  let eyeY = y+2;
+  let eyeY = y + 2;
   
   // face
   noStroke();
@@ -59,29 +61,31 @@ function face(xPos, yPos) {
   // hair
   hair(x, y+hairY);
   
-  
   // glasses
-  stroke(0);
-  strokeWeight(3);
-  noFill();
-  ellipse(x-30, eyeY+3, 40, 37);
-  ellipse(x+30, eyeY+3, 40, 37);
+  if (isGlassesVisible) {
+    stroke(0);
+    strokeWeight(3);
+    noFill();
+    ellipse(x-30, eyeY+3, 40, 37);
+    ellipse(x+30, eyeY+3, 40, 37);
+    
+    line(x-10, eyeY, x+10, eyeY);
+    line(x-52, eyeY, x-62, eyeY);
+    line(x+52, eyeY, x+62, eyeY);
+  }
   
-  line(x-10, eyeY, x+10, eyeY);
-  line(x-52, eyeY, x-62, eyeY);
-  line(x+52, eyeY, x+62, eyeY);
+  noFill();
   
   stroke("#EC7769");
   if(mouseY < y+40) arc(x, y+40, 33, constrain(((y+40)-mouseY)/10, 1, 11), 0, PI);
-  
-  if(mouseY >= y+40) arc(x, y+40, 33, constrain(((y+40)-mouseY)/10, -11, 1), PI, 0);
+  else arc(x, y+40, 33, constrain(((y+40)-mouseY)/10, -11, 1), PI, 0);
   
   if(isHairOff) {
     if(frameCount >= 2*60) hairY -= 2;
   }
 }
 
-function hair(x,y) {
+function hair(x, y) {
   stroke(palette.sideHair);
   fill(palette.sideHair);
   quad(x+60, y-14, x+60, y+6, x+62, y+2, x+63, y-14);
@@ -90,28 +94,59 @@ function hair(x,y) {
   fill(palette.hair);
   stroke(palette.hair);
   beginShape();
-  vertex(x+5, y-58);
-  vertex(x+10, y-54);
-  vertex(x+12, y-14);
+  
+  if (!isNewHairStyle) { 
+    // j키를 누르지 않았을 때 (기존 머리 스타일)
+    vertex(x+5, y-58);
+    vertex(x+10, y-54);
+    vertex(x+12, y-14);
+  }
+  
   vertex(x+63, y-14);
   vertex(x+65, y-40);
   vertex(x+50, y-65);
   vertex(x+30, y-78);
   vertex(x+10, y-84);
-  vertex(x, y-80); // 여기가 기점!
+  vertex(x, y-80);
   vertex(x-10, y-84);
   vertex(x-30, y-78);
   vertex(x-50, y-65);
   vertex(x-65, y-40);
   vertex(x-63, y-14);
-  vertex(x-12, y-14);
-  vertex(x-10, y-54);
-  vertex(x-5, y-58);
+  
+  if (!isNewHairStyle) { 
+    // j키를 누르지 않았을 때 (기존 머리 스타일)
+    vertex(x-12, y-14);
+    vertex(x-10, y-54);
+    vertex(x-5, y-58);
+  }
+  
   endShape();
 }
 
 function keyPressed() {
-  if(key = 'h') {
+  if (key === 'h') {
     isHairOff = true;
+  }
+  if (key === 'g') {
+    isGlassesVisible = false;
+  }
+  if (key === 'j') {
+    isNewHairStyle = true; // j 누르면 새 머리스타일로 전환
+  }
+  if (key === 's') {
+    saveGif('mySketch', 10);
+  }
+}
+
+function keyReleased() {
+  if (key === 'h') {
+    isHairOff = false;
+  }
+  if (key === 'g') {
+    isGlassesVisible = true;
+  }
+  if (key === 'j') {
+    isNewHairStyle = false; // j 떼면 다시 원래 스타일
   }
 }

@@ -18,3 +18,9 @@ function draw() {
   image(img, mouseX, mouseY); // 파라미터는 순서대로 (이미지, x, y)이다. (x, y) 위치가 이미지가 그려질 좌측 상단이다.
   img.resize(300, 400);
 }
+
+console.log(i+"는 짝수입니다."); // 5는 짝수입니다
+
+console.log(i, "는 짝수입니다."); // 5 는 짝수입니다
+
+console.log(`${i}는 짝수입니다.`); // 5는 짝수입니다
